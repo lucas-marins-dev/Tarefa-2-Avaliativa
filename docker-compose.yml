@@ -1,0 +1,27 @@
+# Este arquivo é apenas para demonstração de como seria o sistema utilizando Docker.
+# Ele não será utilizado diretamente neste ambiente.
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongo_fullstack
+    ports:
+    - "27019:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_fullstack
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sistema_de_carros
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mongo_data:
+  mysql_data:
