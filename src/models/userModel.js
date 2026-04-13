@@ -1,23 +1,25 @@
-const mongoose = require("mongoose");
+const pool = require('../config/mysql');
 
-const carSchema = new mongoose.Schema({
-    marca: {
-        type: String,
-        required: true
+const User = {
+    async findAll() {
+        const [rows] = await pool.query('SELECT * FROM users');
+        return rows;
     },
-    modelo: {
-        type: String,
-        required: true
+    async findById(id) {
+        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+        return rows[0];
     },
-    ano: {
-        type: Number,
-        required: true
+    async create(nome) {
+        const [result] = await pool.query('INSERT INTO users (nome) VALUES (?)', [nome]);
+        return { id: result.insertId, nome };
     },
-    preco: {
-        type: Number,
-        required: true
+    async update(id, nome) {
+        await pool.query('UPDATE users SET nome = ? WHERE id = ?', [nome, id]);
+        return { id, nome };
+    },
+    async delete(id) {
+        await pool.query('DELETE FROM users WHERE id = ?', [id]);
     }
-});
+};
 
-const Car = mongoose.model("Car", carSchema);
-module.exports = Car;
+module.exports = User;

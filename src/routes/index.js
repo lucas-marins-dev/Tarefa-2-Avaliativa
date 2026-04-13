@@ -2,21 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const carController = require("../controllers/carController");
-const validateCar = require('../middlewares/validateuser'); // Renomear middleware se necessário
+const userController = require("../controllers/userController");
+const validateUser = require('../middlewares/validateuser');
 
-//GET Listar Todos
+// Car Routes (MongoDB)
 router.get('/cars', carController.listCars);
-
-//GET Listar carros por ID (req.params)
 router.get('/cars/:id', carController.getCar);
-
-//POST - Criação de um carro
-router.post('/cars', validateCar, carController.createCar);
-
-//PUT - Atualizar carro
+router.post('/cars', carController.createCar);
 router.put('/cars/:id', carController.updateCar);
-
-//DELETE
 router.delete('/cars/:id', carController.deleteCar);
+
+// User Routes (MySQL)
+router.get('/users', userController.listUsers);
+router.get('/users/:id', userController.getUser);
+router.post('/users', validateUser, userController.createUser);
+router.put('/users/:id', validateUser, userController.updateUser);
+router.delete('/users/:id', userController.deleteUser);
 
 module.exports = router;

@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sistema_de_carros
+      MYSQL_DATABASE: loja_de_carros
     ports:
       - "3307:3306"
     volumes:
